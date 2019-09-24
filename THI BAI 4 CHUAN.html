@@ -6,9 +6,17 @@
 </head>
 <body>
 <form>
-    <table border="3" align="center" width="1000"  style="color: red">
+    <table border="3" align="center" width="600"  style="color: red">
         <tr>
             <td colspan="2" align="center">AREA and CIRCUM of RETANGLE</td>
+        </tr>
+        <tr>
+            <td align="left">coordinates canvas x</td>
+            <td><input type="text" id="x"></td>
+        </tr>
+        <tr>
+            <td align="left">coordinates canvas y</td>
+            <td><input type="text" id="y"></td>
         </tr>
         <tr>
             <td align="left">LENGHTH of RETANGLE</td>
@@ -36,14 +44,22 @@
         </tr>
         <tr>
             <td align="center">Draw a rectangle corresponding to the index above</td>
-            <td><canvas id="myCanvas" width="800" height="400" style="border: 2px solid red"></canvas></td>
+            <td><canvas id="myCanvas" width="600" height="400" style="border: 2px solid red"></canvas></td>
         </tr>
     </table>
 </form>
 <script>
-    let Rectangle = function (length, width) {
+    let Rectangle = function (length, width,x,y) {
         this.length = length;
         this.width= width;
+        this.x = x;
+        this.y = y;
+        this.getX = function () {
+            return this.x;
+        };
+        this.getY = function () {
+            return this.y;
+        }
         this.getLength = function () {
             return this.length;
         };
@@ -51,16 +67,21 @@
             return this.width;
         };
         this.getArea = function () {
-            return length * width;
+            return length*width;
         };
         this.getCircum = function () {
-            return (length + width) * 2
+            return (length+width)*2;
         }
+
     };
     function createRectangle() {
+        let inputX = parseInt(document.getElementById('x').value);
+        let inputY = parseInt(document.getElementById('y').value);
         let inputlength = parseInt(document.getElementById("length").value);
         let inputwidth = parseInt(document.getElementById("width").value);
-        let rectangle = new Rectangle(inputlength, inputwidth);
+        let rectangle = new Rectangle(inputlength, inputwidth,inputX,inputY);
+        let x = rectangle.getX();
+        let y = rectangle.getY();
         let length = rectangle.getLength();
         let width = rectangle.getWidth();
         let area = rectangle.getArea();
@@ -71,7 +92,7 @@
         let ctx = c.getContext("2d");
         ctx.beginPath();
         ctx.fillStyle = "#000000";
-        ctx.fillRect(10,10,length,width);
+        ctx.fillRect(x,y,length,width);
         ctx.stroke();
     }
 </script>
